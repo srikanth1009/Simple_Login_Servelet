@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -34,11 +33,16 @@ public class LoginServlets extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get Request parameters for userId and Password
+		//Regex pattern for user name
 		String user = request.getParameter("user");
-		String regex = "^[A-Z]{1}[a-z]{3,}$";
-		Pattern p = Pattern.compile(regex);
+		String NAME_PATTERN = "^[A-Z]{1}[a-z]{3,}$";
+		Pattern p = Pattern.compile(NAME_PATTERN);
 		Matcher m = p.matcher(user);
+		//Regex pattern for password
 		String pwd = request.getParameter("pwd");
+		String PASSWORD = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*?&]{8,}$";
+	    Pattern p2 = Pattern.compile(PASSWORD);
+	    Matcher m2 = p2.matcher(pwd);
 		// get servlet configuration init parameters
 		String userId = getServletConfig().getInitParameter("userId");
 		String password = getServletConfig().getInitParameter("password");
