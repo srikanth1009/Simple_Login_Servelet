@@ -2,6 +2,9 @@ package com.bridgelabs;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -32,9 +35,12 @@ public class LoginServlets extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get Request parameters for userId and Password
 		String user = request.getParameter("user");
+		String regex = "^[A-Z]{1}[a-z]{3,}$";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(user);
 		String pwd = request.getParameter("pwd");
 		// get servlet configuration init parameters
-		String userId = getServletConfig().getInitParameter("user");
+		String userId = getServletConfig().getInitParameter("userId");
 		String password = getServletConfig().getInitParameter("password");
 		if (userId.equals(user) && password.equals(pwd)) {
 			request.setAttribute("user", user);
